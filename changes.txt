@@ -1,0 +1,8 @@
+
+A	6	Charizard
+A	7	Squirtle
+D	2	
+A	8	Wartortle
+D	4	
+A	9	Blastoise
+D	8	
