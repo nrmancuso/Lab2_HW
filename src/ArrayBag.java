@@ -37,10 +37,13 @@ public class ArrayBag {
     public boolean add(Pokemon newEntry) {
 
         if (!this.isArrayFull()) {
+
             pokemonArray[numberOfEntries] = newEntry;
             pokemonArray[numberOfEntries].setNext(numberOfEntries + 2);
             numberOfEntries++;
+
             return true;
+
         } else {
             this.growArray();
             pokemonArray[numberOfEntries] = newEntry;
@@ -129,7 +132,7 @@ public class ArrayBag {
      *
      * @return True if successful, false if not
      */
-    public boolean setNexttoDelete() {
+    public void setNextField() {
 
         //Iterate through array
         for (int i = 0; i < numberOfEntries; i++) {
@@ -150,19 +153,15 @@ public class ArrayBag {
                 }
 
                 //If delete field is set true, set next to zero
-            } else {
+            } else if (pokemonArray[i].getDeleteField() == true) {
                 pokemonArray[i].setNext(0);
             }
 
-            //If the last element is has a delete flag set, set it to -1
-            if (i == numberOfEntries - 1 && pokemonArray[i].getDeleteField() == true) {
+            //If the last element is has a delete flag not set, set it to -1
+            if (i == numberOfEntries - 1 && pokemonArray[i].getDeleteField() == false) {
                 pokemonArray[i].setNext(-1);
             }
         }
-
-
-        System.out.println("ID number not valid or Pokemon doesn't exist.");
-        return false;
     }
 
     /**
@@ -172,7 +171,6 @@ public class ArrayBag {
 
         pokemonArray = new Pokemon[10];
         numberOfEntries = 0;
-
 
     }
 
@@ -214,6 +212,45 @@ public class ArrayBag {
 
         for (int i = 0; i < numberOfEntries; i++) {
             sb.append(pokemonArray[i].toString() + "\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String toTabFileWithDelete() {
+
+        StringBuilder sb = new StringBuilder();
+
+
+        for (int i = 0; i < numberOfEntries; i++) {
+            sb.append(pokemonArray[i].getID() + "\t" + pokemonArray[i].getName() + "\t" + pokemonArray[i].getDeleteField() + "\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String toTabFileWithNext() {
+
+        StringBuilder sb = new StringBuilder();
+
+        this.setNextField();
+
+        for (int i = 0; i < numberOfEntries; i++) {
+            sb.append(pokemonArray[i].getID() + "\t" + pokemonArray[i].getName() + "\t" + pokemonArray[i].getNext() + "\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String toTabFileWithSkip() {
+
+        StringBuilder sb = new StringBuilder();
+
+
+        for (int i = 0; i < numberOfEntries; i++) {
+            if (pokemonArray[i].getDeleteField() == false) {
+                sb.append(pokemonArray[i].getID() + "\t" + pokemonArray[i].getName() + "\t" + "\n");
+            }
         }
 
         return sb.toString();
