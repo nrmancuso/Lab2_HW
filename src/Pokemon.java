@@ -45,6 +45,12 @@ public class Pokemon {
     }
 
     @Override
+    public boolean equals(Object pokemonObj) {
+
+        return this.ID == ((Pokemon) pokemonObj).getID();
+    }
+
+    @Override
     public String toString() {
         return "Pokemon{" +
                 "ID=" + ID +
